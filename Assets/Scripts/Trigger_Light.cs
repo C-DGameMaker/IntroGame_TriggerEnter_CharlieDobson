@@ -14,12 +14,14 @@ public class Trigger_Light : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         colorLight.enabled = true;
+        
         myBall.SetActive(true);
     }
 
     private void OnTriggerStay(Collider other)
     {
         colorLight.color = Random.ColorHSV();
+
     }
     private void OnTriggerExit(Collider other)
     {
