@@ -17,6 +17,10 @@ public class Trigger_Light : MonoBehaviour
         myBall.SetActive(true);
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        colorLight.color = Random.ColorHSV();
+    }
     private void OnTriggerExit(Collider other)
     {
         colorLight.enabled = false;
