@@ -1,16 +1,22 @@
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Trigger_Roll : MonoBehaviour
 {
     public GameObject myBall;
-    void Start()
-    {
-        myBall.SetActive(false); 
-    }
+    public float timer = 0;
+
+    static Vector3 start;
+    static Vector3 end;
+    
     private void OnTriggerEnter(Collider other)
     {
         myBall.SetActive(true);
+
+        start = new Vector3(1, 1.5f, -7);
+        end = new Vector3(-1, 1.5f, -7);
+        myBall.transform.position = start;
     }
 
     private void OnTriggerExit(Collider other)
@@ -18,21 +24,19 @@ public class Trigger_Roll : MonoBehaviour
         myBall.SetActive(false);
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    float timer = 0;
+    private void OnTriggerStay(Collider other)
+    {
+        
+        timer += Time.deltaTime;
+        float t = timer;
+        t = Mathf.Clamp01(t);
 
-    //    timer += Time.deltaTime;
-    //    float t = timer;
-    //    Vector3 start = new Vector3(1, 1.5f, -7);
-    //    Vector3 end = new Vector3(-1, 1.5f, -7);
+        myBall.transform.position = Vector3.Lerp(start, end, t);
 
-    //    myBall.transform.position = Vector3.Lerp(start, end, t);
-
-    //    if(t >= 100f)
-    //    {
-    //        timer = 0f;
-    //        (start, end) = (end, start);
-    //    }
-    //}
+        if (t >= 1f)
+        {
+            timer = 0f;
+            (start, end) = (end, start);
+        }
+    }
 }
